@@ -6,7 +6,7 @@ import { getCategories } from "../api/categories";
 export default function TrainingsList() {
   const [data, setData] = useState(null);     // { items, page, pageSize, totalItems, totalPages }
   const [loading, setLoading] = useState(true);
-  const [error,   setError]   = useState("");
+  const [error, setError] = useState("");
 
   // Sayfalama
   const [page, setPage] = useState(1);
@@ -60,7 +60,7 @@ export default function TrainingsList() {
     })();
   }, [page, pageSize, search, categoryId]);
 
-  if (loading && !data) return <p>Loading…</p>;
+  if (loading && !data) return <p>Yükleniyor...</p>;
   if (error) return <p style={{ color: "crimson" }}>{error}</p>;
 
   const items = data?.items ?? [];
@@ -72,12 +72,13 @@ export default function TrainingsList() {
 
   return (
     <div>
-      <h1>Trainings</h1>
+      <h1>Eğitimler</h1>
 
+    
       {/* Filtreler */}
       <div className="toolbar">
         <input
-          placeholder="Search title…"
+          placeholder="Ara..."
           value={searchLocal}
           onChange={(e) => setSearchLocal(e.target.value)}
           style={{ minWidth: 220 }}
@@ -87,7 +88,7 @@ export default function TrainingsList() {
           value={categoryId}
           onChange={(e) => { setCategoryId(e.target.value); setPage(1); }}
         >
-          <option value="">All categories</option>
+          <option value="">Hepsi</option>
           {cats.map((c) => (
             <option key={c.id} value={c.id}>
               {c.categoryName}
@@ -104,39 +105,40 @@ export default function TrainingsList() {
           <option value="20">20</option>
         </select>
 
-        {/* <Link to="/trainings/new">+ New</Link> */}
-      </div>
-
-      {/* Debug göstergesi (istersen kaldır) */}
-      <div className="debug">
-        <code>page={page}</code>{" "}
-        <code>pageSize={pageSize}</code>{" "}
-        <code>search="{search}"</code>{" "}
-        <code>categoryId={categoryId || "(none)"}</code>
+        <Link to="/trainings/new" className="new-training-btn">
+          + Yeni Eğitim Ekle
+        </Link>
+    
       </div>
 
       {/* Liste */}
       {items.length === 0 ? (
-        <p>No results.</p>
+        <p>Sonuç bulunamadı.</p>
       ) : (
-        <ul className="grid">
+        <ul className="card-grid">
           {items.map((t) => (
-            <li key={t.id}>
+            <li key={t.id} className="card">
               <Link to={`/trainings/${t.id}`}>
-                <strong>{t.title}</strong>
+                <h3>{t.title}</h3>
               </Link>
-              {t.shortDescription ? <> — {t.shortDescription}</> : null}
+              {t.shortDescription && <p>{t.shortDescription}</p>}
+              {t.imageUrl && (
+                <img
+                  src={t.imageUrl}
+                  alt={t.title}
+                  style={{ width: "100%", borderRadius: 8, marginTop: 8 }}
+                />
+              )}
             </li>
           ))}
         </ul>
       )}
 
-      {/* Pager */}
-      <div className="pager">
-        <button disabled={!hasPrev} onClick={() => setPage((p) => p - 1)}>‹ Prev</button>
-        <span>Page <strong>{page}</strong> / {totalPages}</span>
-        <button disabled={!hasNext} onClick={() => setPage((p) => p + 1)}>Next ›</button>
-        <span style={{ opacity: 0.8 }}>Total: {totalItems}</span>
+      <div className="pager-fixed">
+        <button disabled={!hasPrev} onClick={() => setPage((p) => p - 1)}>‹ Önceki</button>
+        <span>Sayfa <strong>{page}</strong> / {totalPages}</span>
+        <button disabled={!hasNext} onClick={() => setPage((p) => p + 1)}>Sonraki ›</button>
+        <span style={{ opacity: 0.8 }}>Toplam Kayıt: {totalItems}</span>
       </div>
     </div>
   );

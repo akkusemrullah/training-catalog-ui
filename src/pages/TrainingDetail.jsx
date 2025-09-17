@@ -5,52 +5,87 @@ import { getTraining, deleteTraining } from "../api/trainings";
 export default function TrainingDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [training, setTraining] = useState(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
     (async () => {
       try {
-        setLoading(true); setError("");
-        const res = await getTraining(Number(id));
-        setData(res);
+        const t = await getTraining(Number(id));
+        setTraining(t);
       } catch (e) {
-        setError(e?.response?.data?.title || e.message || "Error");
-      } finally {
-        setLoading(false);
+        setError("Eğitim bulunamadı");
       }
     })();
   }, [id]);
 
-  if (loading && !data) return <p>Loading…</p>;
-  if (error) return <p style={{ color:"crimson" }}>{error}</p>;
-  if (!data) return null;
+  async function handleDelete() {
+    if (window.confirm("Bu eğitimi silmek istiyor musunuz?")) {
+      await deleteTraining(Number(id));
+      navigate("/");
+    }
+  }
+
+  if (error) return <p style={{ color: "crimson" }}>{error}</p>;
+  if (!training) return <p>Yükleniyor…</p>;
+
+  const start = training.startDate ? new Date(training.startDate).toLocaleString() : null;
+  const end = training.endDate ? new Date(training.endDate).toLocaleString() : null;
+  const categoryName = training.category?.categoryName || training.categoryName || null;
 
   return (
-    <div>
-      <h1>{data.title}</h1>
-      {data.imageUrl && (
-        <img src={data.imageUrl} alt={data.title} style={{ maxWidth: 640, width: "100%", borderRadius: 8 }} />
-      )}
-      <p><strong>Short:</strong> {data.shortDescription}</p>
-      <p><strong>Long:</strong> {data.longDescription}</p>
-      <p><strong>Dates:</strong> {data.startDate ?? "-"} → {data.endDate ?? "-"}</p>
+    <div className="training-detail training-detail--spaced">
+      <div className="training-detail__grid">
+        {/* Sol: Hero görsel (geniş ekranda solda) */}
+        <div className="training-detail__hero">
+          {training.imageUrl ? (
+            <img src={training.imageUrl} alt={training.title} />
+          ) : (
+            /* Görsel yoksa basit bir placeholder */
+            <img
+              src={`https://picsum.photos/seed/${training.id || "training"}/960/540`}
+              alt="placeholder"
+            />
+          )}
+        </div>
 
-      <div style={{ display:"flex", gap:10 }}>
-        {/* Düzenleme sayfasını sonra ekleyebiliriz */}
-        <button
-          onClick={async () => {
-            if (confirm("Delete this training?")) {
-              await deleteTraining(data.id);
-              navigate("/");
-            }
-          }}
-        >
-          Delete
-        </button>
-        <Link to={`/trainings/${data.id}/edit`}>Edit</Link>
-        <Link to="/">Back</Link>
+        {/* Sağ: Başlık + meta + açıklama + aksiyonlar */}
+        <div className="training-detail__content">
+          <h1 className="training-detail__title">{training.title}</h1>
+
+          <div className="training-detail__meta">
+            {categoryName && <span className="badge">{categoryName}</span>}
+
+
+          </div>
+          {start && (
+            <span>
+              <strong>Başlangıç:</strong> {start}
+            </span>
+          )}
+          {end && (
+            <span>
+              <strong>Bitiş:</strong> {end}
+            </span>
+          )}
+          <span className={`state ${training.isPublished ? "ok" : "draft"}`}>
+            {training.isPublished ? "Yayınlandı" : "Taslak"}
+          </span>
+          {training.shortDescription && (
+            <p style={{ color: "#555", margin: "4px 0 2px" }}>
+              {training.shortDescription}
+            </p>
+          )}
+
+          <div className="training-detail__desc">
+            {training.longDescription}
+          </div>
+
+          <div className="training-detail__actions">
+            <Link to={`/trainings/${id}/edit`} className="btn btn-primary">Düzenle</Link>
+            <button onClick={handleDelete} className="btn btn-danger">Sil</button>
+          </div>
+        </div>
       </div>
     </div>
   );

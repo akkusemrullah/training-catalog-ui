@@ -27,11 +27,13 @@ export default function TrainingForm() {
       try {
         const list = await getCategories();
         setCats(Array.isArray(list) ? list : []);
-      } catch { setCats([]); }
+      } catch {
+        setCats([]);
+      }
     })();
   }, []);
 
-  // edit ise veriyi çek
+  // düzenleme modunda veriyi çek
   useEffect(() => {
     if (!editing) return;
     (async () => {
@@ -46,7 +48,7 @@ export default function TrainingForm() {
         setEndDate(t.endDate ?? "");
         setIsPublished(!!t.isPublished);
       } catch (e) {
-        setError(e?.response?.data?.title || e.message || "Error");
+        setError(e?.response?.data?.title || e.message || "Hata oluştu");
       }
     })();
   }, [id, editing]);
@@ -55,7 +57,6 @@ export default function TrainingForm() {
     e.preventDefault();
     setError("");
 
-    // HTML5 doğrulama dışında basit guard
     if (!title || title.length > 120) return;
     if (!shortDescription || shortDescription.length > 280) return;
     if (!longDescription) return;
@@ -76,40 +77,41 @@ export default function TrainingForm() {
       else await createTraining(payload);
       navigate("/");
     } catch (e) {
-      setError(e?.response?.data?.title || e.message || "Error");
+      setError(e?.response?.data?.title || e.message || "Hata oluştu");
     }
   }
 
   return (
     <div>
-      <h1>{editing ? "Edit Training" : "New Training"}</h1>
-      {error && <p style={{ color: "crimson" }}>{error}</p>}
+      <form onSubmit={onSubmit} className="training-form">
+        <h1>{editing ? "Eğitimi Düzenle" : "Yeni Eğitim Ekle"}</h1>
 
-      <form onSubmit={onSubmit} className="grid" style={{ maxWidth: 640 }}>
+        {error && <p className="error">{error}</p>}
+
         <label>
-          Title
+          Başlık
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
             maxLength={120}
           />
+          <small>{title.length}/120 karakter</small>
         </label>
-        <small>{title.length}/120</small>
 
         <label>
-          Short Description
+          Kısa Açıklama
           <input
             value={shortDescription}
             onChange={(e) => setShortDescription(e.target.value)}
             required
             maxLength={280}
           />
+          <small>{shortDescription.length}/280 karakter</small>
         </label>
-        <small>{shortDescription.length}/280</small>
 
         <label>
-          Long Description
+          Uzun Açıklama
           <textarea
             rows={6}
             value={longDescription}
@@ -119,12 +121,12 @@ export default function TrainingForm() {
         </label>
 
         <label>
-          Category
+          Kategori
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
           >
-            <option value="">(none)</option>
+            <option value="">(Seçilmedi)</option>
             {cats.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.categoryName}
@@ -134,18 +136,18 @@ export default function TrainingForm() {
         </label>
 
         <label>
-          Image URL
+          Görsel URL
           <input
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="https://..."
             pattern="https?://.+"
-            title="Valid URL (http/https)"
+            title="Geçerli bir URL giriniz (http/https)"
           />
         </label>
 
         <label>
-          Start Date
+          Başlangıç Tarihi
           <input
             type="datetime-local"
             value={startDate || ""}
@@ -154,7 +156,7 @@ export default function TrainingForm() {
         </label>
 
         <label>
-          End Date
+          Bitiş Tarihi
           <input
             type="datetime-local"
             value={endDate || ""}
@@ -162,18 +164,20 @@ export default function TrainingForm() {
           />
         </label>
 
-        <label>
+        <label className="checkbox">
           <input
             type="checkbox"
             checked={isPublished}
             onChange={(e) => setIsPublished(e.target.checked)}
           />{" "}
-          Published
+          Yayınlansın mı?
         </label>
 
-        <div style={{ display: "flex", gap: 8 }}>
-          <button type="submit">{editing ? "Save" : "Create"}</button>
-          <Link to="/">Cancel</Link>
+        <div className="actions">
+          <button type="submit">{editing ? "Kaydet" : "Oluştur"}</button>
+          <Link to="/" className="cancel-link">
+            İptal
+          </Link>
         </div>
       </form>
     </div>

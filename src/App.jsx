@@ -5,13 +5,10 @@ import TrainingForm from "./pages/TrainingForm.jsx";
 
 export default function App() {
   return (
-    <div className="container">
+    <div className="container page-content">
       <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-        <Link to="/"><h2>Training Catalog</h2></Link>
-        <nav style={{ display: "flex", gap: 12 }}>
-          <Link to="/">List</Link>
-          <Link to="/trainings/new">+ New</Link>
-        </nav>
+        <Link to="/"><h2>EAKSOFT</h2></Link>
+
       </header>
       <Routes>
         <Route path="/" element={<TrainingsList />} />
@@ -20,6 +17,10 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/trainings/:id/edit" element={<TrainingForm />} />
       </Routes>
+
+      <footer>
+        © {new Date().getFullYear()} EAKSOFT — Eğitim Kataloğu
+      </footer>
     </div>
   );
 }
