@@ -1,6 +1,6 @@
 # Training Catalog UI
 
-EAKSOFT eğitim kataloğu için geliştirilen bu proje, eğitmenlerin ve içerik yöneticilerinin eğitimleri listeleyip yönetebilmelerini sağlayan modern bir React arayüzüdür. Uygulama, REST API üzerinden eğitim verilerini alır, filtreleme ve sayfalama destekleriyle kullanıcıların aradıkları içeriğe hızlıca ulaşmasına yardımcı olur.
+Eğitim kataloğu için geliştirilen bu proje, eğitmenlerin ve içerik yöneticilerinin eğitimleri listeleyip yönetebilmelerini sağlayan modern bir React arayüzüdür. Uygulama, REST API üzerinden eğitim verilerini alır, filtreleme ve sayfalama destekleriyle kullanıcıların aradıkları içeriğe hızlıca ulaşmasına yardımcı olur.
 
 ## Başlıca Özellikler
 - 📚 **Eğitim listesi:** Başlık, kısa açıklama ve görselleriyle tüm eğitimleri kart yapısında sunar.
