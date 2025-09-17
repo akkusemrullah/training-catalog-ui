@@ -32,21 +32,6 @@ npm run dev
 ```
 Komut çalıştıktan sonra konsolda verilen yerel adresi (varsayılan `http://localhost:5173`) tarayıcıda açarak uygulamayı görüntüleyebilirsiniz. Vite sayesinde kod değişiklikleri otomatik olarak sayfaya yansır.
 
-### Üretim Derlemesi
-```bash
-npm run build
-```
-Derleme çıktısı `dist/` klasörüne alınır. Statik dosyaları servis etmek için Vite'ın yerleşik önizlemesini kullanabilirsiniz:
-```bash
-npm run preview
-```
-
-### Kod Kalitesi
-Projede ESLint yapılandırması bulunmaktadır. Kuralları çalıştırmak için:
-```bash
-npm run lint
-```
-
 ## Ortam Değişkenleri
 Uygulama, API isteklerinde taban adresi için `VITE_API_BASE_URL` değişkenine ihtiyaç duyar. Geliştirme ortamında `.env` dosyanıza aşağıdaki gibi ekleyin:
 ```bash
