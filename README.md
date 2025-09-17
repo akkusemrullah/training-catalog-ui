@@ -1,12 +1,86 @@
-# React + Vite
+# Training Catalog UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+EAKSOFT eğitim kataloğu için geliştirilen bu proje, eğitmenlerin ve içerik yöneticilerinin eğitimleri listeleyip yönetebilmelerini sağlayan modern bir React arayüzüdür. Uygulama, REST API üzerinden eğitim verilerini alır, filtreleme ve sayfalama destekleriyle kullanıcıların aradıkları içeriğe hızlıca ulaşmasına yardımcı olur.
 
-Currently, two official plugins are available:
+## Başlıca Özellikler
+- 📚 **Eğitim listesi:** Başlık, kısa açıklama ve görselleriyle tüm eğitimleri kart yapısında sunar.
+- 🔍 **Arama ve filtreleme:** Başlık/kısa açıklama içinde metin arama, kategoriye göre filtreleme ve sayfa başına kayıt sayısını değiştirme.
+- 📄 **Detay sayfası:** Eğitimlerin görsel, açıklama ve zaman bilgilerini tek ekranda gösterir; taslak/yayında durumunu öne çıkarır.
+- ✏️ **Oluşturma ve düzenleme:** Yeni eğitim ekleme veya mevcut kaydı güncelleme akışları ile form doğrulamaları içerir.
+- 🗑️ **Silme işlemi:** İlgili API üzerinden eğitim silme ve listeye yönlendirme.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Teknoloji 
+- [React 19](https://react.dev/) + [Vite](https://vitejs.dev/) tabanlı SPA mimarisi
+- [React Router DOM](https://reactrouter.com/) ile çoklu sayfa yönetimi
+- [Axios](https://axios-http.com/) ile HTTP istekleri ve merkezi API istemcisi
+- Modern CSS (App.css & component bazlı sınıflar) ile responsive arayüz
 
-## Expanding the ESLint configuration
+## Başlangıç
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Gereksinimler
+- Node.js 18+ (Node 20 LTS önerilir)
+- npm 9+ (Node ile birlikte gelir)
+
+### Kurulum
+```bash
+npm install
+```
+
+### Geliştirme Sunucusu
+```bash
+npm run dev
+```
+Komut çalıştıktan sonra konsolda verilen yerel adresi (varsayılan `http://localhost:5173`) tarayıcıda açarak uygulamayı görüntüleyebilirsiniz. Vite sayesinde kod değişiklikleri otomatik olarak sayfaya yansır.
+
+### Üretim Derlemesi
+```bash
+npm run build
+```
+Derleme çıktısı `dist/` klasörüne alınır. Statik dosyaları servis etmek için Vite'ın yerleşik önizlemesini kullanabilirsiniz:
+```bash
+npm run preview
+```
+
+### Kod Kalitesi
+Projede ESLint yapılandırması bulunmaktadır. Kuralları çalıştırmak için:
+```bash
+npm run lint
+```
+
+## Ortam Değişkenleri
+Uygulama, API isteklerinde taban adresi için `VITE_API_BASE_URL` değişkenine ihtiyaç duyar. Geliştirme ortamında `.env` dosyanıza aşağıdaki gibi ekleyin:
+```bash
+VITE_API_BASE_URL=http://localhost:5000
+```
+> Not: URL değerini kendi backend servisinizin adresine göre güncelleyin. Değer protokolle (`http://` veya `https://`) birlikte yazılmalıdır.
+
+## Beklenen API Uç Noktaları
+Arayüz aşağıdaki REST uç noktalarını bekler:
+
+| Metot | URL                     | Açıklama                         |
+|-------|------------------------|----------------------------------|
+| GET   | `/api/Training`        | Sayfalı eğitim listesi           |
+| GET   | `/api/Training/{id}`   | Belirli eğitimin detayları       |
+| POST  | `/api/Training`        | Yeni eğitim oluşturma            |
+| PUT   | `/api/Training/{id}`   | Mevcut eğitimi güncelleme        |
+| DELETE| `/api/Training/{id}`   | Eğitimi silme                    |
+| GET   | `/api/Category`        | Kategori listesini görüntüleme   |
+
+Listeleme isteğinde sorgu parametreleri olarak `pageNumber`, `pageSize`, `search`, `categoryId` değerleri gönderilir. API varsayılan olarak yalnızca yayınlanmış (`isPublished`) eğitimleri dönecek şekilde yapılandırılmalıdır.
+
+## Proje Yapısı
+```
+src/
+├─ api/                # Axios tabanlı API istemcisi ve istek yardımcıları
+├─ pages/              # Liste, detay ve form ekranları
+├─ App.jsx             # Router tanımları ve temel düzen
+├─ main.jsx            # React uygulama girişi
+├─ App.css, index.css  # Genel stiller
+```
+
+## Önizlemeler
+- ![Sayfalama](docs/screenshots/eaksoft1.png)
+- ![Detay](docs/screenshots/eaksoft2.png)
+- ![Düzenleme](docs/screenshots/eaksoft3.png)
+- ![Yeni Kayıt](docs/screenshots/eaksoft4.png)
+  
