@@ -4,21 +4,18 @@ import { getTrainings } from "../api/trainings";
 import { getCategories } from "../api/categories";
 
 export default function TrainingsList() {
-  const [data, setData] = useState(null);     // { items, page, pageSize, totalItems, totalPages }
+  const [data, setData] = useState(null); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Sayfalama
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  // Filtreler
   const [search, setSearch] = useState("");
-  const [searchLocal, setSearchLocal] = useState(""); // input için (debounce)
-  const [categoryId, setCategoryId] = useState("");   // select value
+  const [searchLocal, setSearchLocal] = useState(""); 
+  const [categoryId, setCategoryId] = useState("");  
   const [cats, setCats] = useState([]);
 
-  // Kategoriler
   useEffect(() => {
     (async () => {
       try {
@@ -30,7 +27,6 @@ export default function TrainingsList() {
     })();
   }, []);
 
-  // Debounce: 400ms sonra search'e yaz (3. sayfadaysan 1'e dönmek istemiyorsan setPage(1)'i kaldır)
   useEffect(() => {
     const t = setTimeout(() => {
       setSearch(searchLocal.trim());
@@ -39,7 +35,6 @@ export default function TrainingsList() {
     return () => clearTimeout(t);
   }, [searchLocal]);
 
-  // Veri çek
   useEffect(() => {
     (async () => {
       try {
@@ -49,7 +44,6 @@ export default function TrainingsList() {
           pageSize,
           search,
           categoryId: categoryId ? Number(categoryId) : undefined,
-          // isPublished: true, // backend default true yapıyorsa göndermeyebilirsin
         });
         setData(res);
       } catch (e) {
@@ -74,8 +68,6 @@ export default function TrainingsList() {
     <div>
       <h1>Eğitimler</h1>
 
-    
-      {/* Filtreler */}
       <div className="toolbar">
         <input
           placeholder="Ara..."
@@ -111,7 +103,6 @@ export default function TrainingsList() {
     
       </div>
 
-      {/* Liste */}
       {items.length === 0 ? (
         <p>Sonuç bulunamadı.</p>
       ) : (

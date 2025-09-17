@@ -36,12 +36,12 @@ export default function TrainingDetail() {
   return (
     <div className="training-detail training-detail--spaced">
       <div className="training-detail__grid">
-        {/* Sol: Hero görsel (geniş ekranda solda) */}
+
         <div className="training-detail__hero">
           {training.imageUrl ? (
             <img src={training.imageUrl} alt={training.title} />
           ) : (
-            /* Görsel yoksa basit bir placeholder */
+            
             <img
               src={`https://picsum.photos/seed/${training.id || "training"}/960/540`}
               alt="placeholder"
@@ -49,7 +49,7 @@ export default function TrainingDetail() {
           )}
         </div>
 
-        {/* Sağ: Başlık + meta + açıklama + aksiyonlar */}
+        
         <div className="training-detail__content">
           <h1 className="training-detail__title">{training.title}</h1>
 

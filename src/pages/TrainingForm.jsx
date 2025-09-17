@@ -8,7 +8,6 @@ export default function TrainingForm() {
   const editing = Boolean(id);
   const navigate = useNavigate();
 
-  // form state
   const [title, setTitle] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [longDescription, setLongDescription] = useState("");
@@ -21,7 +20,7 @@ export default function TrainingForm() {
   const [cats, setCats] = useState([]);
   const [error, setError] = useState("");
 
-  // kategoriler
+
   useEffect(() => {
     (async () => {
       try {
@@ -33,7 +32,7 @@ export default function TrainingForm() {
     })();
   }, []);
 
-  // düzenleme modunda veriyi çek
+
   useEffect(() => {
     if (!editing) return;
     (async () => {

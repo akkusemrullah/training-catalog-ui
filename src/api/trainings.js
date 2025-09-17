@@ -1,12 +1,5 @@
 import { api } from "./client";
 
-/**
- * UI -> API param isimleri:
- * page      -> pageNumber
- * pageSize  -> pageSize
- * search    -> search
- * categoryId-> categoryId
- */
 export async function getTrainings(params = {}) {
   const { page, pageSize, search, categoryId } = params;
 

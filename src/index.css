@@ -105,7 +105,7 @@ a:hover {
 
 .pager-fixed {
   position: fixed;
-  bottom: 40px; /* footer'ın üstünde */
+  bottom: 40px; 
   left: 0;
   width: 100%;
   background: #fff;
@@ -128,7 +128,7 @@ footer {
   padding: 8px;
   font-size: 0.85rem;
   color: #555;
-  z-index: 999; /* pager'ın arkasında değil, altında */
+  z-index: 999;
 }
 
 
@@ -239,7 +239,7 @@ footer {
 }
 
 .page-content {
-  padding-bottom: 100px; /* footer yüksekliği + biraz ekstra */
+  padding-bottom: 100px; 
 }
 
 .new-training-btn {
@@ -268,7 +268,6 @@ footer {
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
-/* Responsive grid: üstte hero, altta içerik; geniş ekranda iki sütun */
 .training-detail__grid {
   display: grid;
   gap: 20px;
@@ -294,7 +293,6 @@ footer {
   color: #666;
 }
 
-/* Kategori pili */
 .badge {
   display: inline-block;
   padding: 4px 10px;
@@ -305,13 +303,12 @@ footer {
   font-size: 0.85rem;
 }
 
-/* HERO görsel alanı (gölge + overlay) */
 .training-detail__hero {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 28px rgba(0,0,0,0.12);
-  background: #f5f5f5; /* görsel yoksa */
+  background: #f5f5f5; 
 }
 
 .training-detail__hero img {
@@ -320,7 +317,6 @@ footer {
   display: block;
 }
 
-/* Hafif degrade overlay (görseli daha “kart” hisli yapar) */
 .training-detail__hero::after {
   content: "";
   position: absolute;
@@ -329,7 +325,6 @@ footer {
   pointer-events: none;
 }
 
-/* İçerik alanı */
 .training-detail__content {
   display: grid;
   gap: 12px;
@@ -339,10 +334,9 @@ footer {
   font-size: 1rem;
   line-height: 1.6;
   color: #3f3f3f;
-  white-space: pre-wrap; /* uzun açıklamalar için satır sonlarını koru */
+  white-space: pre-wrap; 
 }
 
-/* Aksiyonlar */
 .training-detail__actions {
   margin-top: 12px;
   display: flex;
@@ -366,14 +360,12 @@ footer {
 .btn-danger   { background: #ad4242; color: #fff; }
 .btn-danger:hover { background: #8a3131; }
 
-/* Yayın durumu etiketi */
 .state {
   font-weight: 600;
 }
 .state.ok { color: #16794a; }
 .state.draft { color: #9c6b00; }
 
-/* Alt boşluk: sabit footer + pager kapatmasın */
 .training-detail--spaced {
   padding-bottom: 160px;
 }
